@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Xml.Serialization;
@@ -20,6 +21,10 @@ namespace HidWizards.UCR.Core.Models
         private List<IODefinition> _inputCategories;
         private List<IODefinition> _outputCategories;
         private List<List<PluginProperty>> _guiMatrix;
+
+        public delegate void PreviewCallback( long[] invalues, long[] outvalues );
+        [XmlIgnore]
+        public PreviewCallback OnPreviewUpdate;
 
         #region Properties
         

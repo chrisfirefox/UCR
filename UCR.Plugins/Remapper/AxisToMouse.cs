@@ -34,6 +34,7 @@ namespace HidWizards.UCR.Plugins.Remapper
             if (Sensitivity != 100) value = Functions.ApplyRangeSensitivity(value, Sensitivity, false);
             value = Math.Min(Math.Max(value, Constants.AxisMinValue), Constants.AxisMaxValue);
             WriteOutput(0, value);
+            OnPreviewUpdate?.Invoke( values, new long[] { value } );
         }
     }
 }

@@ -28,21 +28,26 @@ namespace HidWizards.UCR.Plugins.Remapper
             var value = values[0];
             if (Invert) value *= -1;
             value = Math.Sign(Functions.ApplyRangeDeadZone(value,DeadZone));
+
+            var outvals = new long[2];
             switch (value)
             {
                 case 0:
-                    WriteOutput(0, 0);
-                    WriteOutput(1, 0);
+                    outvals[0] = 0;
+                    outvals[1] = 0;
                     break;
                 case 1:
-                    WriteOutput(0, 1);
-                    WriteOutput(1, 0);
+                    outvals[0] = 1;
+                    outvals[1] = 0;
                     break;
                 case -1:
-                    WriteOutput(0, 0);
-                    WriteOutput(1, 1);
+                    outvals[0] = 0;
+                    outvals[1] = 1;
                     break;
             }
+            WriteOutput( 0, outvals[0] );
+            WriteOutput( 1, outvals[1] );
+            OnPreviewUpdate?.Invoke( values, outvals );
         }
     }
 }

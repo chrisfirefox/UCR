@@ -8,6 +8,7 @@ namespace HidWizards.UCR.ViewModels.ProfileViewModels
         public MappingViewModel MappingViewModel { get; }
         public Plugin Plugin { get; set; }
         public ObservableCollection<DeviceBindingViewModel> DeviceBindings { get; set; }
+        public PreviewViewModel Preview { get; set; }
 
         public PluginViewModel(MappingViewModel mappingViewModel, Plugin plugin)
         {
@@ -15,11 +16,17 @@ namespace HidWizards.UCR.ViewModels.ProfileViewModels
             Plugin = plugin;
 
             PopulateDeviceBindingsViewModels();
+            PopulatePreviewViewModels();
         }
 
         public void Remove()
         {
             MappingViewModel.RemovePlugin(this);
+        }
+
+        private void PopulatePreviewViewModels()
+        {
+            Preview = new PreviewViewModel( Plugin );
         }
 
         private void PopulateDeviceBindingsViewModels()

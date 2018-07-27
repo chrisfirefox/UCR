@@ -15,7 +15,9 @@ namespace HidWizards.UCR.Plugins.Remapper
 
         public override void Update(params long[] values)
         {
-            WriteOutput(0, values[0]*(Constants.AxisMaxValue/1000));
+            var outval = values[0] * (Constants.AxisMaxValue / 1000);
+            WriteOutput(0, outval);
+            OnPreviewUpdate?.Invoke( values, new long[] { outval } );
         }
     }
 }

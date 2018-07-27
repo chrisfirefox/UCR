@@ -29,22 +29,20 @@ namespace HidWizards.UCR.Plugins.Remapper
             DeadZone = 0;
         }
 
-        public override void Update(params long[] values)
-        {
+        public override void Update( params long[] values ) {
             var valueHigh = values[0];
             var valueLow = values[1];
             long valueOutput;
 
-            if (InvertHigh) valueHigh *= -1;
-            if (InvertLow) valueLow *= -1;
+            if( InvertHigh ) valueHigh *= -1;
+            if( InvertLow ) valueLow *= -1;
 
-            switch (Mode)
-            {
+            switch( Mode ) {
                 case AxisMergerMode.Average:
                     valueOutput = (valueHigh + valueLow) / 2L;
                     break;
                 case AxisMergerMode.Greatest:
-                    valueOutput = Math.Abs(valueHigh) > Math.Abs(valueLow) ? valueHigh : valueLow;
+                    valueOutput = Math.Abs( valueHigh ) > Math.Abs( valueLow ) ? valueHigh : valueLow;
                     break;
                 case AxisMergerMode.Sum:
                     valueOutput = valueHigh + valueLow;
@@ -54,11 +52,11 @@ namespace HidWizards.UCR.Plugins.Remapper
                     break;
             }
 
-            if (DeadZone != 0)
-            {
-                valueOutput = Functions.ApplyRangeDeadZone(valueOutput, DeadZone);
+            if( DeadZone != 0 ) {
+                valueOutput = Functions.ApplyRangeDeadZone( valueOutput, DeadZone );
             }
-            WriteOutput(0, valueOutput);
+            WriteOutput( 0, valueOutput );
+            OnPreviewUpdate?.Invoke( values, new long[] { valueOutput } );
         }
 
         public enum AxisMergerMode

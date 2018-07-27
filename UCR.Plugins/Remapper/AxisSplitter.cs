@@ -30,8 +30,12 @@ namespace HidWizards.UCR.Plugins.Remapper
             var value = values[0];
 
             if (DeadZone != 0) value = Functions.ApplyRangeDeadZone(value, DeadZone);
-            WriteOutput(0, Functions.HalfAxisToFullRange(value, true, InvertHigh));
-            WriteOutput(1, Functions.HalfAxisToFullRange(value, false, InvertLow));
+            long[] outval = new long[2];
+            outval[0] = Functions.HalfAxisToFullRange( value, true, InvertHigh );
+            outval[1] = Functions.HalfAxisToFullRange( value, false, InvertLow );
+            WriteOutput(0, outval[0]);
+            WriteOutput(1, outval[1]);
+            OnPreviewUpdate?.Invoke( values, outval );
         }
     }
 }

@@ -13,16 +13,19 @@ namespace HidWizards.UCR.Plugins.Remapper
         [PluginGui("Invert", ColumnOrder = 0, RowOrder = 0)]
         public bool Invert { get; set; }
 
-        public override void Update(params long[] values)
+        public override void Update( params long[] values )
         {
+            long[] outval = new long[1];
             if (Invert)
             {
-                WriteOutput(0, values[0] == 0 ? 1 : 0);
+                outval[0] = values[0] == 0 ? 1 : 0;
             }
             else
             {
-                WriteOutput(0, values[0]);
+                outval[0] = values[0];
             }
+            WriteOutput( 0, outval[0] );
+            OnPreviewUpdate?.Invoke( values, outval );
         }
     }
 }
